@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.explorewithme.user.dto.UserDto;
 import ru.practicum.explorewithme.user.dto.mapper.UserDtoMapper;
-import ru.practicum.explorewithme.user.model.User;
-import ru.practicum.explorewithme.user.service.UserService;
+import ru.practicum.explorewithme.user.service.AdminUserService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -23,21 +22,20 @@ import java.util.List;
 @RequestMapping("/admin/users")
 @Slf4j
 public class AdminUserController {
-    private final UserService userService;
+    private final AdminUserService adminUserService;
 
     @PostMapping
     public UserDto create(@RequestBody @Valid UserDto userDto) {
         log.info("[ewm-service] Получен POST запрос к эндпоинту /admins/users\n" +
                 "Тело запроса: {}", userDto);
-       User user = userService.create(UserDtoMapper.toUser(userDto));
-       return UserDtoMapper.toUserDto(user);
+       return adminUserService.create(UserDtoMapper.toUser(userDto));
     }
 
     @DeleteMapping("/{userId}")
     public void delete(@PathVariable long userId) {
         log.info("[ewm-service] Получен DELETE запрос к эндпоинту /admin/users/{}"
         , userId);
-        userService.delete(userId);
+        adminUserService.delete(userId);
     }
 
     @GetMapping
@@ -47,6 +45,6 @@ public class AdminUserController {
         log.info("[ewm-service] Получен GET запрос к эндпоинту /admin/users\n" +
                 "Параменты запроса: ids = {}, from = {}, size = {}",
                 ids, from, size);
-        return UserDtoMapper.toUserDto(userService.getByIds(ids, from, size));
+        return adminUserService.getByIds(ids, from, size);
     }
 }

@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.event;
+package ru.practicum.explorewithme.event.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class PublicEventController {
     private final PublicEventService publicEventService;
 
     @GetMapping
-    public List<EventFullDto> getAll(@RequestParam(required = false) String text,
+    public List<EventShortDto> getAll(@RequestParam(required = false) String text,
                                       @RequestParam(required = false) List<Long> categories,
                                       @RequestParam(required = false) Boolean paid,
                                       @RequestParam(required = false)
@@ -39,12 +39,22 @@ public class PublicEventController {
                                       @RequestParam(required = false) Boolean onlyAvailable,
                                       @RequestParam(required = false, defaultValue = "EVENT_DATE") EventSort sort,
                                       @RequestParam(required = false, defaultValue = "0") int from,
-                                      @RequestParam(required = false, defaultValue = "10") int size) {
+                                      @RequestParam(required = false, defaultValue = "10") int size,
+                                      HttpServletRequest request) {
         log.info("[ewm-service] Поступил GET запрос к эндпоинту /events \n" +
                 "Парраметры поиска: text = {}, categories = {}, paid = {}, rangeStart = {}, rangeEnd = {}, " +
                 "onlyAvailable = {}, sort = {}, from = {}, size = {}",
                 text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size);
-        return publicEventService.getAll(text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size);
+        return publicEventService.getAll(text,
+                categories,
+                paid,
+                rangeStart,
+                rangeEnd,
+                onlyAvailable,
+                sort,
+                from,
+                size,
+                request);
     }
 
     @GetMapping("/{eventId}")

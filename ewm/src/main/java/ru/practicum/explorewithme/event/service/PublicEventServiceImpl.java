@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.practicum.explorewithme.client.StatsClient;
 import ru.practicum.explorewithme.client.dto.ViewStatsDto;
@@ -18,8 +17,8 @@ import ru.practicum.explorewithme.event.model.QEvent;
 import ru.practicum.explorewithme.event.model.EventSort;
 import ru.practicum.explorewithme.event.repository.EventRepository;
 import ru.practicum.explorewithme.exception.EntityNotFoundException;
-import ru.practicum.explorewithme.participation.model.ParticipationStatus;
-import ru.practicum.explorewithme.participation.model.QParticipation;
+import ru.practicum.explorewithme.request.model.ParticipationStatus;
+import ru.practicum.explorewithme.request.model.QParticipation;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -35,28 +34,40 @@ public class PublicEventServiceImpl implements PublicEventService {
     private final StatsClient statsClient;
 
     @Override
-    public List<EventFullDto> getAll(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart, LocalDateTime rangeEnd, Boolean onlyAvailable, EventSort eventSort, int from, int size) {
+    public List<EventShortDto> getAll(String text,
+                                      List<Long> categories,
+                                      Boolean paid,
+                                      LocalDateTime rangeStart,
+                                      LocalDateTime rangeEnd,
+                                      Boolean onlyAvailable,
+                                      EventSort eventSort,
+                                      int from,
+                                      int size,
+                                      HttpServletRequest request) {
+        statsClient.save(request);
         BooleanExpression predicate = getPredicate(text, categories, paid, rangeStart, rangeEnd, onlyAvailable);
         if (eventSort.equals(EventSort.EVENT_DATE)) {
             Pageable pageSortedByDate = PageRequest.of(from, size, Sort.by("eventDate").descending());
-            return EventDtoMapper.toEventFullDto(eventRepository.findAll(predicate, pageSortedByDate).getContent());
+            return EventDtoMapper.toEventShortDto(eventRepository.findAll(predicate, pageSortedByDate).getContent());
         } else {
             Pageable pageSortedByViews = PageRequest.of(from, size, Sort.by("views").descending());
-            return EventDtoMapper.toEventFullDto(eventRepository.findAll(predicate, pageSortedByViews).getContent());
+            return EventDtoMapper.toEventShortDto(eventRepository.findAll(predicate, pageSortedByViews).getContent());
         }
     }
 
     @Override
     public EventFullDto getById(HttpServletRequest request, long eventId) {
-        Event event = eventRepository.findById(eventId)
+        QEvent event = QEvent.event;
+        BooleanExpression predicate = event.id.eq(eventId).and(event.state.eq(EventState.PUBLISHED));
+        Event foundedEvent = eventRepository.findOne(predicate)
                 .orElseThrow(() -> new EntityNotFoundException("Событие не найдено",
                 String.format("События с ID %d не найдено", eventId)));
-        List<ViewStatsDto> responseBody = statsClient.getViews(Collections.singletonList(event), true);
+        List<ViewStatsDto> responseBody = statsClient.getViews(Collections.singletonList(foundedEvent), true);
         if (!responseBody.isEmpty()) {
-            event.setViews(responseBody.get(0).getHits());
+            foundedEvent.setViews(responseBody.get(0).getHits());
         }
         statsClient.save(request);
-        return EventDtoMapper.toEventFullDto(event);
+        return EventDtoMapper.toEventFullDto(foundedEvent);
     }
 
     private BooleanExpression getPredicate(String text,

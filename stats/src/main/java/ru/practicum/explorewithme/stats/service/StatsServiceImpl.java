@@ -1,22 +1,17 @@
 package ru.practicum.explorewithme.stats.service;
 
-import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.explorewithme.stats.dto.EndpointHitDto;
 import ru.practicum.explorewithme.stats.dto.StatsMapper;
 import ru.practicum.explorewithme.stats.dto.ViewStatsDto;
-import ru.practicum.explorewithme.stats.model.EndpointHit;
-import ru.practicum.explorewithme.stats.model.QEndpointHit;
 import ru.practicum.explorewithme.stats.model.ViewStats;
 import ru.practicum.explorewithme.stats.repository.StatsRepository;
 
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

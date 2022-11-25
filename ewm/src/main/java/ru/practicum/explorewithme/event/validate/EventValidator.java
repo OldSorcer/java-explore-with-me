@@ -2,7 +2,7 @@ package ru.practicum.explorewithme.event.validate;
 
 import ru.practicum.explorewithme.event.model.Event;
 import ru.practicum.explorewithme.event.model.EventState;
-import ru.practicum.explorewithme.exception.handler.ForbiddenOperationException;
+import ru.practicum.explorewithme.exception.ForbiddenOperationException;
 
 import java.time.LocalDateTime;
 

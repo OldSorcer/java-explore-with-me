@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.event;
+package ru.practicum.explorewithme.event.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

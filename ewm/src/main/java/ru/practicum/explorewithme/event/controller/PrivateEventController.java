@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.event;
+package ru.practicum.explorewithme.event.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +16,7 @@ import ru.practicum.explorewithme.event.dto.EventShortDto;
 import ru.practicum.explorewithme.event.dto.NewEventDto;
 import ru.practicum.explorewithme.event.dto.UpdateEventDto;
 import ru.practicum.explorewithme.event.service.PrivateEventService;
-import ru.practicum.explorewithme.event.service.PublicEventService;
-import ru.practicum.explorewithme.participation.dto.ParticipationRequestDto;
+import ru.practicum.explorewithme.request.dto.ParticipationRequestDto;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -46,7 +45,7 @@ public class PrivateEventController {
     }
 
     @GetMapping
-    public List<EventFullDto> getByInitiatorId(@PathVariable @Min(1) long userId,
+    public List<EventShortDto> getByInitiatorId(@PathVariable @Min(1) long userId,
                                                 @RequestParam(required = false, defaultValue = "0") int from,
                                                 @RequestParam(required = false, defaultValue = "10") int size) {
         return eventService.getByInitiatorId(userId, from, size);

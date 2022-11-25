@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PublicEventService {
-    List<EventFullDto> getAll(String text,
+    List<EventShortDto> getAll(String text,
                                List<Long> categories,
                                Boolean paid,
                                LocalDateTime rangeStart,
@@ -18,7 +18,8 @@ public interface PublicEventService {
                                Boolean onlyAvailable,
                                EventSort eventSort,
                                int from,
-                               int size);
+                               int size,
+                               HttpServletRequest request);
 
     EventFullDto getById(HttpServletRequest request, long eventId);
 }

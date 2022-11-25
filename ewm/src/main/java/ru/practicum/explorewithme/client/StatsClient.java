@@ -34,7 +34,7 @@ public class StatsClient extends BaseClient {
     private final ObjectMapper om;
 
     @Autowired
-    public StatsClient(@Value("${ewm.stats.server-url}") String url, ObjectMapper om) {
+    public StatsClient(@Value("${stats.server-url}") String url, ObjectMapper om) {
         super(url);
         this.om = om;
     }

@@ -16,16 +16,15 @@ import ru.practicum.explorewithme.event.model.EventState;
 import ru.practicum.explorewithme.event.repository.EventRepository;
 import ru.practicum.explorewithme.event.validate.EventValidator;
 import ru.practicum.explorewithme.exception.EntityNotFoundException;
-import ru.practicum.explorewithme.exception.handler.ForbiddenOperationException;
-import ru.practicum.explorewithme.participation.dto.ParticipationRequestDto;
-import ru.practicum.explorewithme.participation.dto.mapper.ParticipantMapper;
-import ru.practicum.explorewithme.participation.model.Participation;
-import ru.practicum.explorewithme.participation.model.ParticipationStatus;
-import ru.practicum.explorewithme.participation.repository.ParticipationRepository;
+import ru.practicum.explorewithme.exception.ForbiddenOperationException;
+import ru.practicum.explorewithme.request.dto.ParticipationRequestDto;
+import ru.practicum.explorewithme.request.dto.mapper.ParticipantDtoMapper;
+import ru.practicum.explorewithme.request.model.Participation;
+import ru.practicum.explorewithme.request.model.ParticipationStatus;
+import ru.practicum.explorewithme.request.repository.RequestRepository;
 import ru.practicum.explorewithme.user.model.User;
 import ru.practicum.explorewithme.user.repository.UserRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.lang.String.format;
@@ -37,7 +36,7 @@ public class PrivateEventServiceImpl implements PrivateEventService{
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
-    private final ParticipationRepository participationRepository;
+    private final RequestRepository requestRepository;
 
     @Override
     public EventFullDto create(NewEventDto eventDto, long userId) {
@@ -69,9 +68,9 @@ public class PrivateEventServiceImpl implements PrivateEventService{
     }
 
     @Override
-    public List<EventFullDto> getByInitiatorId(long initiatorId, int from, int size) {
+    public List<EventShortDto> getByInitiatorId(long initiatorId, int from, int size) {
         Pageable page = PageRequest.of(from, size);
-        return EventDtoMapper.toEventFullDto(eventRepository.findByInitiatorId(initiatorId, page));
+        return EventDtoMapper.toEventShortDto(eventRepository.findByInitiatorId(initiatorId, page));
     }
 
     @Override
@@ -100,7 +99,7 @@ public class PrivateEventServiceImpl implements PrivateEventService{
             throw new ForbiddenOperationException("Запрещенная операция",
                     "Невозможно получить заявки на запрос к событию, добавленному другим пользователем");
         }
-        return ParticipantMapper.toParticipationRequestDto(participationRepository.findAllByEventId(eventId));
+        return ParticipantDtoMapper.toParticipationRequestDto(requestRepository.findAllByEventId(eventId));
     }
 
     @Override
@@ -110,7 +109,7 @@ public class PrivateEventServiceImpl implements PrivateEventService{
             throw new ForbiddenOperationException("Запрещенная операция",
                     "Невозможно принимать запросы к событию, добавленному другим пользователем");
         }
-        Participation request = participationRepository.findById(requestId)
+        Participation request = requestRepository.findById(requestId)
                 .orElseThrow(() -> new EntityNotFoundException("Запрос не найден",
                         String.format("Запрос с ID %d не найден", requestId)));
         if (!request.getStatus().equals(ParticipationStatus.PENDING)) {
@@ -119,8 +118,11 @@ public class PrivateEventServiceImpl implements PrivateEventService{
         }
         request.setStatus(ParticipationStatus.CONFIRMED);
         foundedEvent.setConfirmedRequests(foundedEvent.getConfirmedRequests() + 1);
+        if (foundedEvent.getConfirmedRequests() == foundedEvent.getParticipantLimit()) {
+            rejectAllRequests(eventId);
+        }
         eventRepository.save(foundedEvent);
-        return ParticipantMapper.toParticipationRequestDto(participationRepository.save(request));
+        return ParticipantDtoMapper.toParticipationRequestDto(requestRepository.save(request));
     }
 
     @Override
@@ -130,7 +132,7 @@ public class PrivateEventServiceImpl implements PrivateEventService{
             throw new ForbiddenOperationException("Запрещенная операция",
                     "Невозможно отклонять запросы к событию, добавленному другим пользователем");
         }
-        Participation request = participationRepository.findById(requestId)
+        Participation request = requestRepository.findById(requestId)
                 .orElseThrow(() -> new EntityNotFoundException("Запрос не найден",
                         String.format("Запрос с ID %d не найден", requestId)));
         if (!request.getStatus().equals(ParticipationStatus.PENDING)) {
@@ -139,12 +141,18 @@ public class PrivateEventServiceImpl implements PrivateEventService{
         }
         request.setStatus(ParticipationStatus.REJECTED);
         eventRepository.save(foundedEvent);
-        return ParticipantMapper.toParticipationRequestDto(participationRepository.save(request));
+        return ParticipantDtoMapper.toParticipationRequestDto(requestRepository.save(request));
     }
 
     private Event findEventById(long eventId) {
         return eventRepository.findById(eventId)
                 .orElseThrow(() -> new EntityNotFoundException("События не найдено",
                         String.format("Событие с ID %d не найден", eventId)));
+    }
+
+    private void rejectAllRequests(long eventId) {
+        List<Participation> requests = requestRepository.findAllByEventId(eventId);
+        requests.forEach((r) -> r.setStatus(ParticipationStatus.REJECTED));
+        requestRepository.saveAll(requests);
     }
 }

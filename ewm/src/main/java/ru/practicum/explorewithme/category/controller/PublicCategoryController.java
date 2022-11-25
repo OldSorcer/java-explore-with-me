@@ -34,7 +34,7 @@ public class PublicCategoryController {
 
     @GetMapping("/{categoryId}")
     public CategoryDto getById(@PathVariable @Min(1) long categoryId) {
-        log.info("[ewm-service] Получен GET запрос к эндпоинту /categories/{}\n", categoryId);
+        log.info("[ewm-service] Получен GET запрос к эндпоинту /categories/{}", categoryId);
         return CategoryDtoMapper.toCategoryDto(categoryService.getById(categoryId));
     }
 }

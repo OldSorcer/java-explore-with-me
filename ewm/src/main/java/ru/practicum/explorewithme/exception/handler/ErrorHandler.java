@@ -11,6 +11,7 @@ import ru.practicum.explorewithme.exception.ConflictException;
 import ru.practicum.explorewithme.exception.EntityNotFoundException;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ErrorHandler {
@@ -51,9 +52,22 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handleMethodArgumentNotValidException(MethodArgumentNotValidException exc) {
         return ApiError.builder()
+                .errors(exc.getFieldErrors().stream().map(Object::toString).collect(Collectors.toList()))
                 .message(exc.getMessage())
                 .reason(exc.getParameter().getParameterName())
                 .timestamp(LocalDateTime.now())
                 .build();
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiError handleUnsupportedError(Exception exc) {
+        return ApiError.builder()
+                .message("Server error")
+                .reason(exc.getMessage())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .timestamp(LocalDateTime.now())
+                .build();
+
     }
 }

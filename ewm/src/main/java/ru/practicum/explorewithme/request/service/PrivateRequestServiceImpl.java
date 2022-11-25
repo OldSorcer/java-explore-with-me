@@ -1,29 +1,29 @@
-package ru.practicum.explorewithme.participation.service;
+package ru.practicum.explorewithme.request.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.explorewithme.event.model.Event;
-import ru.practicum.explorewithme.event.model.EventState;
 import ru.practicum.explorewithme.event.repository.EventRepository;
 import ru.practicum.explorewithme.event.validate.EventValidator;
 import ru.practicum.explorewithme.exception.ConflictException;
 import ru.practicum.explorewithme.exception.EntityNotFoundException;
-import ru.practicum.explorewithme.exception.handler.ForbiddenOperationException;
-import ru.practicum.explorewithme.participation.dto.ParticipationRequestDto;
-import ru.practicum.explorewithme.participation.dto.mapper.ParticipantMapper;
-import ru.practicum.explorewithme.participation.model.Participation;
-import ru.practicum.explorewithme.participation.model.ParticipationStatus;
-import ru.practicum.explorewithme.participation.repository.ParticipationRepository;
+import ru.practicum.explorewithme.exception.ForbiddenOperationException;
+import ru.practicum.explorewithme.request.dto.ParticipationRequestDto;
+import ru.practicum.explorewithme.request.dto.mapper.ParticipantDtoMapper;
+import ru.practicum.explorewithme.request.model.Participation;
+import ru.practicum.explorewithme.request.model.ParticipationStatus;
+import ru.practicum.explorewithme.request.repository.RequestRepository;
 import ru.practicum.explorewithme.user.model.User;
 import ru.practicum.explorewithme.user.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class ParticipantServiceImpl implements ParticipantService{
-    private final ParticipationRepository participationRepository;
+public class PrivateRequestServiceImpl implements PrivateRequestService {
+    private final RequestRepository requestRepository;
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
 
@@ -31,25 +31,30 @@ public class ParticipantServiceImpl implements ParticipantService{
     public ParticipationRequestDto create(long userId, long eventId) {
         User foundedUser = findUserById(userId);
         Event foundedEvent = findEventById(eventId);
+        Optional<Participation> foundedRequest = requestRepository.findByRequesterIdAndEventId(userId, eventId);
+        if (foundedRequest.isPresent()) {
+            throw new ForbiddenOperationException("Запрещенная операция",
+                    "Запрос на участие в событии от текущего пользователя уже создан");
+        }
         Participation request = createRequest(foundedUser, foundedEvent);
         if (request.getStatus().equals(ParticipationStatus.CONFIRMED)) {
             foundedEvent.setConfirmedRequests(foundedEvent.getConfirmedRequests() + 1);
             eventRepository.save(foundedEvent);
         }
-        return ParticipantMapper.toParticipationRequestDto(participationRepository.save(request));
+        return ParticipantDtoMapper.toParticipationRequestDto(requestRepository.save(request));
     }
 
     @Override
     public List<ParticipationRequestDto> getAll(long userId) {
         findUserById(userId);
-        List<Participation> participants = participationRepository.findAllByRequesterId(userId);
-        return ParticipantMapper.toParticipationRequestDto(participants);
+        List<Participation> participants = requestRepository.findAllByRequesterId(userId);
+        return ParticipantDtoMapper.toParticipationRequestDto(participants);
     }
 
     @Override
     public ParticipationRequestDto cancelRequest(long userId, long requestId) {
         User foundedUser = findUserById(userId);
-        Participation request = participationRepository.findById(requestId)
+        Participation request = requestRepository.findById(requestId)
                 .orElseThrow(() -> new EntityNotFoundException("Запрос на участие не найден",
                         String.format("Запрос на участие в событии с ID %d не найден", requestId)));
         if (foundedUser.getId() != request.getRequester().getId()) {
@@ -61,7 +66,7 @@ public class ParticipantServiceImpl implements ParticipantService{
             foundedEvent.setConfirmedRequests(foundedEvent.getConfirmedRequests() - 1);
         }
         request.setStatus(ParticipationStatus.CANCELED);
-        return ParticipantMapper.toParticipationRequestDto(participationRepository.save(request));
+        return ParticipantDtoMapper.toParticipationRequestDto(requestRepository.save(request));
     }
 
     private User findUserById(long userId) {
@@ -82,11 +87,11 @@ public class ParticipantServiceImpl implements ParticipantService{
                     "Запрос на участие не может быть создан к собственному событию");
         }
         EventValidator.validateEventState(event);
-        Participation.ParticipationBuilder participationBuilder = Participation.builder();
         LocalDateTime createdOn = LocalDateTime.now();
-        participationBuilder.requester(requester);
-        participationBuilder.event(event);
-        participationBuilder.created(createdOn);
+        Participation.ParticipationBuilder participationBuilder = Participation.builder()
+                .requester(requester)
+                .event(event)
+                .created(createdOn);
         if (event.isRequestModeration()) {
             participationBuilder.status(ParticipationStatus.PENDING);
         } else {

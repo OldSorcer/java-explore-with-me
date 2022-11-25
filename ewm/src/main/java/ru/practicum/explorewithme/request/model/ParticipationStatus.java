@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.participation.model;
+package ru.practicum.explorewithme.request.model;
 
 public enum ParticipationStatus {
     PENDING,

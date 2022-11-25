@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.participation.model;
+package ru.practicum.explorewithme.request.model;
 
 import lombok.*;
 import ru.practicum.explorewithme.event.model.Event;

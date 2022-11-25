@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.exception.handler;
+package ru.practicum.explorewithme.exception;
 
 import ru.practicum.explorewithme.exception.CustomException;
 

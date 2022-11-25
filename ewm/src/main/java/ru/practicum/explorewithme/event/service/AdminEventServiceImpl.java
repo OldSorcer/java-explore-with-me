@@ -15,7 +15,7 @@ import ru.practicum.explorewithme.event.model.QEvent;
 import ru.practicum.explorewithme.event.repository.EventRepository;
 import ru.practicum.explorewithme.event.validate.EventValidator;
 import ru.practicum.explorewithme.exception.EntityNotFoundException;
-import ru.practicum.explorewithme.exception.handler.ForbiddenOperationException;
+import ru.practicum.explorewithme.exception.ForbiddenOperationException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

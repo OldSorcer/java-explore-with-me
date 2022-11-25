@@ -78,6 +78,7 @@ public class EventDtoMapper {
                 .title(event.getTitle())
                 .confirmedRequests(event.getConfirmedRequests())
                 .views(event.getViews())
+                .paid(event.isPaid())
                 .build();
     }
 

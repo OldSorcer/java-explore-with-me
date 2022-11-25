@@ -1,12 +1,12 @@
-package ru.practicum.explorewithme.participation.dto.mapper;
+package ru.practicum.explorewithme.request.dto.mapper;
 
-import ru.practicum.explorewithme.participation.dto.ParticipationRequestDto;
-import ru.practicum.explorewithme.participation.model.Participation;
+import ru.practicum.explorewithme.request.dto.ParticipationRequestDto;
+import ru.practicum.explorewithme.request.model.Participation;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ParticipantMapper {
+public class ParticipantDtoMapper {
     public static ParticipationRequestDto toParticipationRequestDto (Participation participation) {
         return ParticipationRequestDto.builder()
                 .id(participation.getId())
@@ -18,6 +18,6 @@ public class ParticipantMapper {
     }
 
     public static List<ParticipationRequestDto> toParticipationRequestDto(List<Participation> participants) {
-        return participants.stream().map(ParticipantMapper::toParticipationRequestDto).collect(Collectors.toList());
+        return participants.stream().map(ParticipantDtoMapper::toParticipationRequestDto).collect(Collectors.toList());
     }
 }

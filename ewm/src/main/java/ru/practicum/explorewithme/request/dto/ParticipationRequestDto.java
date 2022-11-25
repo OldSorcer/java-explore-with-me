@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.participation.dto;
+package ru.practicum.explorewithme.request.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.practicum.explorewithme.participation.model.ParticipationStatus;
+import ru.practicum.explorewithme.request.model.ParticipationStatus;
 
 import java.time.LocalDateTime;
 
