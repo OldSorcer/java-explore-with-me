@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.explorewithme.event.dto.EventFullDto;
 import ru.practicum.explorewithme.event.dto.EventShortDto;
-import ru.practicum.explorewithme.event.model.Event;
 import ru.practicum.explorewithme.event.model.EventSort;
 import ru.practicum.explorewithme.event.service.PublicEventService;
 
@@ -33,17 +32,17 @@ public class PublicEventController {
                                       @RequestParam(required = false) List<Long> categories,
                                       @RequestParam(required = false) Boolean paid,
                                       @RequestParam(required = false)
-                                  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeStart,
+                                      @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeStart,
                                       @RequestParam(required = false)
-                                  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")LocalDateTime rangeEnd,
+                                      @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd,
                                       @RequestParam(required = false) Boolean onlyAvailable,
                                       @RequestParam(required = false, defaultValue = "EVENT_DATE") EventSort sort,
                                       @RequestParam(required = false, defaultValue = "0") int from,
                                       @RequestParam(required = false, defaultValue = "10") int size,
                                       HttpServletRequest request) {
         log.info("[ewm-service] Поступил GET запрос к эндпоинту /events \n" +
-                "Парраметры поиска: text = {}, categories = {}, paid = {}, rangeStart = {}, rangeEnd = {}, " +
-                "onlyAvailable = {}, sort = {}, from = {}, size = {}",
+                        "Парраметры поиска: text = {}, categories = {}, paid = {}, rangeStart = {}, rangeEnd = {}, " +
+                        "onlyAvailable = {}, sort = {}, from = {}, size = {}",
                 text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size);
         return publicEventService.getAll(text,
                 categories,
@@ -59,7 +58,7 @@ public class PublicEventController {
 
     @GetMapping("/{eventId}")
     public EventFullDto getById(HttpServletRequest request,
-                                @PathVariable@Min(1) int eventId) {
+                                @PathVariable @Min(1) int eventId) {
         return publicEventService.getById(request, eventId);
     }
 }

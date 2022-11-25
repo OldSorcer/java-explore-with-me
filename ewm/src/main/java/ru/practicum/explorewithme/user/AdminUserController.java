@@ -28,13 +28,12 @@ public class AdminUserController {
     public UserDto create(@RequestBody @Valid UserDto userDto) {
         log.info("[ewm-service] Получен POST запрос к эндпоинту /admins/users\n" +
                 "Тело запроса: {}", userDto);
-       return adminUserService.create(UserDtoMapper.toUser(userDto));
+        return adminUserService.create(UserDtoMapper.toUser(userDto));
     }
 
     @DeleteMapping("/{userId}")
     public void delete(@PathVariable long userId) {
-        log.info("[ewm-service] Получен DELETE запрос к эндпоинту /admin/users/{}"
-        , userId);
+        log.info("[ewm-service] Получен DELETE запрос к эндпоинту /admin/users/{}", userId);
         adminUserService.delete(userId);
     }
 
@@ -43,7 +42,7 @@ public class AdminUserController {
                                   @RequestParam(defaultValue = "0") int from,
                                   @RequestParam(defaultValue = "10") int size) {
         log.info("[ewm-service] Получен GET запрос к эндпоинту /admin/users\n" +
-                "Параменты запроса: ids = {}, from = {}, size = {}",
+                        "Параменты запроса: ids = {}, from = {}, size = {}",
                 ids, from, size);
         return adminUserService.getByIds(ids, from, size);
     }

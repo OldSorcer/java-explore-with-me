@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface AdminUserService {
     UserDto create(User userDto);
+
     void delete(long userId);
+
     List<UserDto> getByIds(List<Long> ids, int from, int size);
 }

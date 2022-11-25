@@ -15,7 +15,10 @@ public interface AdminEventService {
                               LocalDateTime rangeEnd,
                               int from,
                               int size);
+
     EventFullDto update(UpdateEventDto eventDto, long eventId);
+
     EventFullDto publish(long eventId);
+
     EventFullDto reject(long eventId);
 }

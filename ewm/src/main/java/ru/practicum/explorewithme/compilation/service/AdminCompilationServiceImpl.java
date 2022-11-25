@@ -50,8 +50,8 @@ public class AdminCompilationServiceImpl implements AdminCompilationService {
     public void addEvent(long compId, long eventId) {
         Compilation foundedCompilation = findCompilation(compId);
         Event foundedEvent = eventRepository.findById(eventId)
-                        .orElseThrow(() -> new EntityNotFoundException("Событие не найдено",
-                                String.format("Событие с ID %d не найдено", eventId)));
+                .orElseThrow(() -> new EntityNotFoundException("Событие не найдено",
+                        String.format("Событие с ID %d не найдено", eventId)));
         foundedCompilation.getEvents().add(foundedEvent);
         compilationRepository.save(foundedCompilation);
     }
@@ -81,7 +81,7 @@ public class AdminCompilationServiceImpl implements AdminCompilationService {
 
     private Event findEventInCompilation(long eventId, Compilation foundedCompilation) {
         return foundedCompilation.getEvents().stream()
-                .filter( e -> e.getId() == eventId)
+                .filter(e -> e.getId() == eventId)
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Событие не найдено",
                         String.format("Событие с ID %d не состоит в подборке")));

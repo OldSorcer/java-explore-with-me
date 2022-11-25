@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.explorewithme.compilation.dto.CompilationDto;
 import ru.practicum.explorewithme.compilation.dto.NewCompilationDto;
-import ru.practicum.explorewithme.compilation.dto.mapper.CompilationDtoMapper;
 import ru.practicum.explorewithme.compilation.service.AdminCompilationService;
 
 import javax.validation.Valid;

@@ -1,16 +1,10 @@
 package ru.practicum.explorewithme.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.explorewithme.client.dto.EndpointHitDto;
 import ru.practicum.explorewithme.client.dto.ViewStatsDto;
 import ru.practicum.explorewithme.event.model.Event;
@@ -27,11 +21,11 @@ import java.util.Map;
 
 @Component
 public class StatsClient extends BaseClient {
+    private final String prefixPost = "/hit";
+    private final String prefixGet = "/stats?start={start}&end={end}&unique={unique}&uris={uris}";
+    private final ObjectMapper om;
     @Value("Explore-With-Me")
     private String app;
-    private final static String PREFIX_POST = "/hit";
-    private final static String PREFIX_GET = "/stats?start={start}&end={end}&unique={unique}&uris={uris}";
-    private final ObjectMapper om;
 
     @Autowired
     public StatsClient(@Value("${stats.server-url}") String url, ObjectMapper om) {
@@ -42,7 +36,7 @@ public class StatsClient extends BaseClient {
     public void save(HttpServletRequest request) {
         String uri = request.getRequestURI();
         String ip = request.getRemoteAddr();
-        post(PREFIX_POST, new EndpointHitDto(app, uri, ip));
+        post(prefixPost, new EndpointHitDto(app, uri, ip));
     }
 
     public List<ViewStatsDto> getViews(List<Event> events, boolean unique) {
@@ -55,7 +49,7 @@ public class StatsClient extends BaseClient {
         parameters.put("unique", unique);
         parameters.put("uris", uris);
         try {
-            return Arrays.asList(om.readValue(get(PREFIX_GET, parameters).getBody(), ViewStatsDto[].class));
+            return Arrays.asList(om.readValue(get(prefixGet, parameters).getBody(), ViewStatsDto[].class));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

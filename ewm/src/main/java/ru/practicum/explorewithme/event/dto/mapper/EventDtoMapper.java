@@ -14,7 +14,6 @@ import ru.practicum.explorewithme.event.model.EventState;
 import ru.practicum.explorewithme.user.dto.mapper.UserDtoMapper;
 import ru.practicum.explorewithme.user.model.User;
 
-import javax.xml.stream.EventFilter;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +22,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class EventDtoMapper {
     private final StatsClient statsClient;
+
     public static Event toEvent(NewEventDto newEventDto, User initiator, Category category) {
         return Event.builder()
                 .annotation(newEventDto.getAnnotation())

@@ -2,7 +2,6 @@ package ru.practicum.explorewithme.event.service;
 
 import ru.practicum.explorewithme.event.dto.EventFullDto;
 import ru.practicum.explorewithme.event.dto.EventShortDto;
-import ru.practicum.explorewithme.event.model.Event;
 import ru.practicum.explorewithme.event.model.EventSort;
 
 import javax.servlet.http.HttpServletRequest;

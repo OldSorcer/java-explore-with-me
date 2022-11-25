@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ParticipantDtoMapper {
-    public static ParticipationRequestDto toParticipationRequestDto (Participation participation) {
+    public static ParticipationRequestDto toParticipationRequestDto(Participation participation) {
         return ParticipationRequestDto.builder()
                 .id(participation.getId())
                 .event(participation.getEvent().getId())

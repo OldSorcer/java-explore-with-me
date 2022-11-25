@@ -32,7 +32,7 @@ import static ru.practicum.explorewithme.event.dto.mapper.EventDtoMapper.toEvent
 
 @Service
 @AllArgsConstructor
-public class PrivateEventServiceImpl implements PrivateEventService{
+public class PrivateEventServiceImpl implements PrivateEventService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;

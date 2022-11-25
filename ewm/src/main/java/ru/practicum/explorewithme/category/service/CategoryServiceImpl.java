@@ -1,7 +1,6 @@
 package ru.practicum.explorewithme.category.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Override

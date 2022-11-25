@@ -26,6 +26,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class AdminEventServiceImpl implements AdminEventService {
     private final EventRepository eventRepository;
+
     @Override
     public List<EventFullDto> getAll(List<Long> users,
                                      List<EventState> states,

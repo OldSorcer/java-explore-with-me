@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public abstract class CustomException extends RuntimeException{
+public abstract class CustomException extends RuntimeException {
     private final String reason;
     private final LocalDateTime timestamp;
 
