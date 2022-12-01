@@ -19,6 +19,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Класс, расширяющий базовый клиент. Обладает свойствами:
+ * <br><b>prefixPost</b> - конечный эндпоинт для POST запроса;
+ * <br><b>prefixGet</b> - конечный эндпоинт для GET запроса с параметрами.
+ * @see ru.practicum.explorewithme.client.BaseClient
+ */
 @Component
 public class StatsClient extends BaseClient {
     private final String prefixPost = "/hit";
@@ -33,12 +39,23 @@ public class StatsClient extends BaseClient {
         this.om = om;
     }
 
+    /**
+     * Метод сохранения обращения к эндпоинту в сервис статистики.
+     * @param request запрос, полученный к основному сервису.
+     */
     public void save(HttpServletRequest request) {
         String uri = request.getRequestURI();
         String ip = request.getRemoteAddr();
         post(prefixPost, new EndpointHitDto(app, uri, ip));
     }
 
+    /**
+     * Метод получения просмотров событий из сервиса стистики.
+     * @param events список событий, для которых необходимо получить просмотры;
+     * @param unique флаг, определяющий уникальность запросов.
+     * @return список объектов,
+     * описывающих ститистику просмотров {@link ru.practicum.explorewithme.client.dto.ViewStatsDto}
+     */
     public List<ViewStatsDto> getViews(List<Event> events, boolean unique) {
         Map<String, Object> parameters = new HashMap<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -55,6 +72,12 @@ public class StatsClient extends BaseClient {
         }
     }
 
+    /**
+     * Метод преобразует объект события в строковое представление, необходимое для получения статисики из
+     * соответствующего сервиса.
+     * @param event объект события.
+     * @return строковое представление обращения к событию сохраненное в сервисе статистики.
+     */
     private String createUriFromEvent(Event event) {
         return "/events/" + event.getId();
     }

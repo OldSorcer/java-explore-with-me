@@ -10,6 +10,9 @@ import lombok.ToString;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Класс DTO предназначенный для обмена информацие между клиентом и основным сервисом.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

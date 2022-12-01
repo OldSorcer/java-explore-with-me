@@ -19,6 +19,9 @@ import ru.practicum.explorewithme.category.service.CategoryService;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
+/**
+ * Класс-контроллер описывающий эндпоинты для работы с административной частью приложения.
+ */
 @RestController
 @RequestMapping("/admin/categories")
 @AllArgsConstructor

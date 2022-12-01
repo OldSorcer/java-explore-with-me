@@ -20,6 +20,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Класс-сервис содержищий основную функциональность по работе с заявками на участие в событии.
+ * @see ru.practicum.explorewithme.request.service.PrivateRequestService
+ */
 @Service
 @AllArgsConstructor
 public class PrivateRequestServiceImpl implements PrivateRequestService {
@@ -69,18 +73,35 @@ public class PrivateRequestServiceImpl implements PrivateRequestService {
         return ParticipantDtoMapper.toParticipationRequestDto(requestRepository.save(request));
     }
 
+    /**
+     * Метод поиска пользователя по его числовому идентификатору.
+     * @param userId числовой идентификатор пользователя.
+     * @return объект класса {@link ru.practicum.explorewithme.user.model.User}.
+     */
     private User findUserById(long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Пользователь не найден",
                         String.format("Пользователь с ID %d не найден", userId)));
     }
 
+    /**
+     * Метод поиска события по его числовому идентификатору.
+     * @param eventId числовой идентификатор события.
+     * @return объект класса {@link ru.practicum.explorewithme.event.model.Event}.
+     */
     private Event findEventById(long eventId) {
         return eventRepository.findById(eventId)
                 .orElseThrow(() -> new EntityNotFoundException("Событие не найдено",
                         String.format("Событие с ID %d не найдено", eventId)));
     }
 
+    /**
+     * Метод инициализации необходимых для создания запроса на участие в событие полей класса
+     * {@link ru.practicum.explorewithme.request.model.Participation}.
+     * @param requester объект класса {@link ru.practicum.explorewithme.user.model.User};
+     * @param event объект класса {@link ru.practicum.explorewithme.event.model.Event}.
+     * @return объект класса {@link ru.practicum.explorewithme.request.model.Participation}.
+     */
     private Participation createRequest(User requester, Event event) {
         if (requester.getId() == event.getInitiator().getId()) {
             throw new ConflictException("Ошибка при создании запроса на участие",

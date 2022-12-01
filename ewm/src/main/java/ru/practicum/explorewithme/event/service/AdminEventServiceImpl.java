@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Класс описывающий логику работы административной части сервиса по работе с событиями.
+ */
 @Service
 @AllArgsConstructor
 public class AdminEventServiceImpl implements AdminEventService {
@@ -71,12 +74,26 @@ public class AdminEventServiceImpl implements AdminEventService {
         return EventDtoMapper.toEventFullDto(eventRepository.save(foundedEvent));
     }
 
+    /**
+     * Метод поиска события в репозитории по идентификатору.
+     * @param eventId числовой идентификатор.
+     * @return найденное событие.
+     */
     private Event findEventById(long eventId) {
         return eventRepository.findById(eventId)
                 .orElseThrow(() -> new EntityNotFoundException("Событие не найден",
                         String.format("Событие с ID %d не найдено", eventId)));
     }
 
+    /**
+     * Метод создания предиката с необходимыми для фильтрации событий параметрами.
+     * @param users список числовых идентификаторов пользователей-инициаторов;
+     * @param states список статусов событий;
+     * @param categories список категорий событий;
+     * @param rangeStart нижняя граница временного интервала для поиска событий;
+     * @param rangeEnd верхняя граница временного интервала для поиска событий.
+     * @return предикат с заданными параметрами поиска.
+     */
     private BooleanExpression getPredicate(List<Long> users,
                                            List<EventState> states,
                                            List<Long> categories,

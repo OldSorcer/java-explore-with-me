@@ -49,6 +49,12 @@ public class AdminUserServiceImpl implements AdminUserService {
         return UserDtoMapper.toUserDto(userRepository.findAllById(userIds));
     }
 
+    /**
+     * Метод создания разметки страницы.
+     * @param from порядковый номер первой страницы;
+     * @param size количество пользователей на одной странице.
+     * @return объект класса {@link org.springframework.data.domain.PageRequest}
+     */
     private PageRequest getOffset(int from, int size) {
         return PageRequest.of(from, size);
     }

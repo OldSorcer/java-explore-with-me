@@ -9,6 +9,10 @@ import lombok.Setter;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+/**
+ * Класс DTO содержащий информацию, необходимую для обновления информации об уже существующем событии.
+ * Используется при обращении клиента к основному сервису при необходимости изменения события.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

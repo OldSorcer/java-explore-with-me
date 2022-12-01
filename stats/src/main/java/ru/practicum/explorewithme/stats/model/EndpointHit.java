@@ -12,6 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
+/**
+ * Класс описывающий обращение к конкретному эндпоинту обладающий свойствами:
+ * <b>id</b>, <b>app</b>, <b>uri</b>, <b>ip</b>, <b>timestamp</b>.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

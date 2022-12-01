@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * Класс-сервис реализующий основные методы работы с сервисами статистики.
+ * @see ru.practicum.explorewithme.stats.service.StatsService
+ */
 @Service
 @AllArgsConstructor
 public class StatsServiceImpl implements StatsService {

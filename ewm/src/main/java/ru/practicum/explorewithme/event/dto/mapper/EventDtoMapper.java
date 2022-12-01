@@ -1,9 +1,7 @@
 package ru.practicum.explorewithme.event.dto.mapper;
 
-import lombok.AllArgsConstructor;
 import ru.practicum.explorewithme.category.dto.CategoryDtoMapper;
 import ru.practicum.explorewithme.category.model.Category;
-import ru.practicum.explorewithme.client.StatsClient;
 import ru.practicum.explorewithme.event.dto.EventFullDto;
 import ru.practicum.explorewithme.event.dto.EventShortDto;
 import ru.practicum.explorewithme.event.dto.LocationDto;
@@ -19,10 +17,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
-public class EventDtoMapper {
-    private final StatsClient statsClient;
+/**
+ * Утилитарный класс предназначенный для преобразования классов DTO в классы сущностей.
+ */
+public final class EventDtoMapper {
 
+    /**
+     * Метод, преобразующий объект {@link ru.practicum.explorewithme.event.dto.NewEventDto} в
+     * объект класса {@link ru.practicum.explorewithme.event.model.Event}.
+     * @param newEventDto DTO-объект нового события;
+     * @param initiator пользователь - инициатор события;
+     * @param category категория, соответствующая новому событию.
+     * @return объект класса события.
+     */
     public static Event toEvent(NewEventDto newEventDto, User initiator, Category category) {
         return Event.builder()
                 .annotation(newEventDto.getAnnotation())
@@ -41,6 +48,12 @@ public class EventDtoMapper {
                 .build();
     }
 
+    /**
+     * Метод, преобразующий объект класса {@link ru.practicum.explorewithme.event.model.Event} в
+     * объект DTO {@link ru.practicum.explorewithme.event.dto.EventFullDto}.
+     * @param event объект класса события.
+     * @return DTO-объект события.
+     */
     public static EventFullDto toEventFullDto(Event event) {
         return EventFullDto.builder()
                 .annotation(event.getAnnotation())
@@ -62,12 +75,24 @@ public class EventDtoMapper {
                 .build();
     }
 
+    /**
+     * Метод, преобразующий список объектов класса {@link ru.practicum.explorewithme.event.model.Event} в
+     * список DTO-объектов {@link ru.practicum.explorewithme.event.dto.EventFullDto}.
+     * @param events список объектов класса событий.
+     * @return список DTO-объектов.
+     */
     public static List<EventFullDto> toEventFullDto(List<Event> events) {
         return events.stream()
                 .map(EventDtoMapper::toEventFullDto)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Метод, преобразующий объект класса {@link ru.practicum.explorewithme.event.model.Event} в
+     * DTO объект класса {@link ru.practicum.explorewithme.event.dto.EventShortDto}.
+     * @param event объект класса события.
+     * @return DTO-объект.
+     */
     public static EventShortDto toEventShortDto(Event event) {
         return EventShortDto.builder()
                 .annotation(event.getAnnotation())
@@ -82,12 +107,25 @@ public class EventDtoMapper {
                 .build();
     }
 
+    /**
+     * Метод, преобразующий список объектов класса {@link ru.practicum.explorewithme.event.model.Event} в
+     * список объектов класса DTO {@link ru.practicum.explorewithme.event.dto.EventShortDto}.
+     * @param events список объектов класса события.
+     * @return список DTO объектов.
+     */
     public static List<EventShortDto> toEventShortDto(List<Event> events) {
         return events.stream()
                 .map(EventDtoMapper::toEventShortDto)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Метод, преобразующий DTO-объект класса {@link ru.practicum.explorewithme.event.dto.UpdateEventDto} в
+     * объект класса {@link ru.practicum.explorewithme.event.model.Event}.
+     * @param updateEventDto DTO-объект;
+     * @param event объект класса события, который необходимо обновить.
+     * @return обновленный объект класса события.
+     */
     public static Event updateEventDtoToEvent(UpdateEventDto updateEventDto, Event event) {
         if (Objects.nonNull(updateEventDto.getAnnotation())) {
             event.setAnnotation(updateEventDto.getAnnotation());

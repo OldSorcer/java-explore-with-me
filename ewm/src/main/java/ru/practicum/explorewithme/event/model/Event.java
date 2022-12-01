@@ -21,6 +21,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
+/**
+ * Класс события обладающий свойствами:
+ * <b>id</b>, <b>annotation</b>, <b>category</b>, <b>confirmedRequests</b>,
+ * <b>createdOn</b>, <b>description</b>, <b>eventDate</b>, <b>initiator</b>,
+ * <b>lat</b>, <b>lon</b>, <b>paid</b>, <b>participantLimit</b>, <b>publishedOn</b>,
+ * <b>requestModeration</b>, <b>state</b>, <b>title</b>, <b>views</b>.
+ * <br> Свойству <b>category</b> соответствует объект класса {@link ru.practicum.explorewithme.category.model.Category};
+ * <br> Свойству <b>initiator</b> - объект класса {@link ru.practicum.explorewithme.user.model.User};
+ * <br> Свойству <b>state</b> - перечисление {@link ru.practicum.explorewithme.event.model.EventState}
+ * @see ru.practicum.explorewithme.user.model.User
+ * @see ru.practicum.explorewithme.category.model.Category
+ * @see ru.practicum.explorewithme.event.model.EventState
+ */
 @Entity
 @Table(name = "events")
 @AllArgsConstructor

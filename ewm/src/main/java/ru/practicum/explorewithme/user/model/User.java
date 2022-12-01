@@ -4,6 +4,10 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * Класс пользователя обладающий свойствами: <b>id</b>,
+ * <b>name</b>, <b>email</b>.
+ */
 @Entity
 @Table(name = "users")
 @Builder

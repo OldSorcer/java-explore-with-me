@@ -15,6 +15,9 @@ import ru.practicum.explorewithme.category.service.CategoryService;
 import javax.validation.constraints.Min;
 import java.util.List;
 
+/**
+ * Класс-контроллер описывающий эндпоинты для работы с публичной частью приложения.
+ */
 @RestController
 @RequestMapping("/categories")
 @AllArgsConstructor

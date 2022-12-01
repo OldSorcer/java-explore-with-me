@@ -12,6 +12,10 @@ import ru.practicum.explorewithme.exception.EntityNotFoundException;
 
 import java.util.List;
 
+/**
+ * Класс инкапсулирующий логику работы с <b>категориями</b> событий.
+ * @see ru.practicum.explorewithme.category.service.CategoryService
+ */
 @Service
 @AllArgsConstructor
 public class CategoryServiceImpl implements CategoryService {

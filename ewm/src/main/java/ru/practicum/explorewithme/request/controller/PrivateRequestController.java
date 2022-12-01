@@ -16,6 +16,10 @@ import ru.practicum.explorewithme.request.service.PrivateRequestService;
 import javax.validation.constraints.Min;
 import java.util.List;
 
+/**
+ * Класс-контроллер описывающий эндпоинты для взаимодействия с сервисом
+ * заявок на участие в событии.
+ */
 @RestController
 @RequestMapping("/users")
 @AllArgsConstructor

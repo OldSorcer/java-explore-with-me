@@ -19,6 +19,9 @@ import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Класс-контроллер, описывающий эндпоинты для работы с публичной частью сервиса событий.
+ */
 @RestController
 @RequestMapping("/events")
 @AllArgsConstructor
@@ -59,6 +62,7 @@ public class PublicEventController {
     @GetMapping("/{eventId}")
     public EventFullDto getById(HttpServletRequest request,
                                 @PathVariable @Min(1) int eventId) {
+        log.info("[ewm-service] Получен GET запрос к эндпоинту events/{}", eventId);
         return publicEventService.getById(request, eventId);
     }
 }

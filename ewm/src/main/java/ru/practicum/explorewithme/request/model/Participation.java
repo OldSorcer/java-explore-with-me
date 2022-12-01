@@ -7,6 +7,13 @@ import ru.practicum.explorewithme.user.model.User;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Класс описывающий запрос на участие в событии обладающий
+ * свойствами: <b>id</b>, <b>created</b>, <b>requester</b>, <b>event</b>,
+ * <b>status</b>,
+ * где <b>requester</b> - объект класса {@link ru.practicum.explorewithme.user.model.User},
+ * <b>event</b> - объект класса {@link ru.practicum.explorewithme.event.model.Event}.
+ */
 @Entity
 @Table(name = "participations")
 @NoArgsConstructor

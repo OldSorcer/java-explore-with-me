@@ -8,6 +8,10 @@ import lombok.Setter;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+/**
+ * Класс DTO содержащий информацию, необходимую для создания нового события. Используется
+ * клинетом при необходимости создания нового события.
+ */
 @NoArgsConstructor
 @Getter
 @Setter

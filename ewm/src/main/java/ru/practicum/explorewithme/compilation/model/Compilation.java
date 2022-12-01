@@ -18,6 +18,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.List;
 
+/**
+ * Класс подборки событий обладабщий свойствами:
+ * <b>id</b>, <b>pinned</b>, <b>title</b>.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

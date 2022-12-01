@@ -21,6 +21,9 @@ import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Класс-контроллер, описывающий эндпоинты для работы с администратовной частью сервиса событий.
+ */
 @RestController
 @RequestMapping("/admin/events")
 @AllArgsConstructor

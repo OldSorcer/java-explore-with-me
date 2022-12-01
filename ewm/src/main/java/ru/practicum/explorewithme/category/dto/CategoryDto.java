@@ -7,6 +7,10 @@ import lombok.Setter;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Класс описывающий <b>категорию</b> события, предназначенный для обмена информацией
+ * между пользователем и основным сервисом.
+ */
 @AllArgsConstructor
 @Getter
 @Setter

@@ -6,10 +6,18 @@ import ru.practicum.explorewithme.exception.ForbiddenOperationException;
 
 import java.time.LocalDateTime;
 
-public class EventValidator {
+/**
+ * Утилитарный класс-валидатор событий.
+ */
+public final class EventValidator {
     private static final long HOURS_TO_EVENT_FOR_CREATE = 2;
     private static final long HOURS_TO_EVENT_FOR_PUBLIC = 1;
 
+    /**
+     * Метод валидации времени начала события при его создании и публикации.
+     * @param event - объект класса события;
+     * @param isCreate - флаг, определяющий статус события (создание или публикация).
+     */
     public static void validateEventStartTime(Event event, boolean isCreate) {
         LocalDateTime acceptedTime;
         if (isCreate) {
@@ -24,6 +32,10 @@ public class EventValidator {
         }
     }
 
+    /**
+     * Метод валидации состояния события при создании новых запросов на участие в событии.
+     * @param event - событие, к которому создается запрос на участие.
+     */
     public static void validateEventState(Event event) {
         if (!event.getState().equals(EventState.PUBLISHED)) {
             throw new ForbiddenOperationException("Запрещенная операция",

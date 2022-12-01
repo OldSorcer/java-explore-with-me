@@ -14,6 +14,9 @@ import ru.practicum.explorewithme.stats.service.StatsService;
 
 import java.util.List;
 
+/**
+ * Класс контроллер описывающий эндпоинты для работы с сервисом статистики.
+ */
 @RestController
 @AllArgsConstructor
 @RequestMapping("/")

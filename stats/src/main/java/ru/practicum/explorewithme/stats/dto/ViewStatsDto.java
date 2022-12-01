@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Класс DTO предназначенный для обмена информацией между клиентов и сервисом статистики.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

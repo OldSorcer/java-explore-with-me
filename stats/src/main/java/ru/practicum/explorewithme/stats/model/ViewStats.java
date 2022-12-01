@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Класс описывающий статистику обращений к конкретному эндпоинту.
+ */
 @AllArgsConstructor
 @Getter
 @Setter

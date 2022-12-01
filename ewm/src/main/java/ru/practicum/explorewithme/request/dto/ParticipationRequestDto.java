@@ -10,6 +10,9 @@ import ru.practicum.explorewithme.request.model.ParticipationStatus;
 
 import java.time.LocalDateTime;
 
+/**
+ * Класс DTO предназначенный для обмена информацией между клиентом и основным сервисом.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

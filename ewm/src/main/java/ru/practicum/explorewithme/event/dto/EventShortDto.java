@@ -11,6 +11,9 @@ import ru.practicum.explorewithme.user.dto.UserShortDto;
 
 import java.time.LocalDateTime;
 
+/**
+ * Класс DTO для передачи сокращенной информации о событии между клиентом и основным сервисом приложения.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

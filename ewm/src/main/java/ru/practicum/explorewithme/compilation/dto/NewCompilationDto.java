@@ -8,6 +8,9 @@ import lombok.Setter;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ * DTO-класс предназначенный для работы с телом запроса на создание новой <b>подброки</b> событий.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

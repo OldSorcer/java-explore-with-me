@@ -144,12 +144,21 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         return ParticipantDtoMapper.toParticipationRequestDto(requestRepository.save(request));
     }
 
+    /**
+     * Метод поиска события в репозитории по идентификатору.
+     * @param eventId числовой идентификатор события.
+     * @return обект класса события.
+     */
     private Event findEventById(long eventId) {
         return eventRepository.findById(eventId)
                 .orElseThrow(() -> new EntityNotFoundException("События не найдено",
                         String.format("Событие с ID %d не найден", eventId)));
     }
 
+    /**
+     * Метод отклонения всех запросов на участие в событии.
+     * @param eventId числовой идентифкатор события.
+     */
     private void rejectAllRequests(long eventId) {
         List<Participation> requests = requestRepository.findAllByEventId(eventId);
         requests.forEach((r) -> r.setStatus(ParticipationStatus.REJECTED));

@@ -12,6 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Класс категории события обладающий свойствами:
+ * <b>id</b>, <b>name</b>.
+ */
 @Entity
 @Table(name = "categories")
 @AllArgsConstructor

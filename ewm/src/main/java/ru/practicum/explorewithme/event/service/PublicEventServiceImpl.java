@@ -70,6 +70,16 @@ public class PublicEventServiceImpl implements PublicEventService {
         return EventDtoMapper.toEventFullDto(foundedEvent);
     }
 
+    /**
+     * Метод получения предиката на основании требуемых параметров поиска событий.
+     * @param text текст или фрагмент текста в аннотации или описании события;
+     * @param categories чиловой идентификатор категорий событий;
+     * @param paid параметр определяющий требуется ли оплата за участие в событии;
+     * @param rangeStart нижняя граница временного интервала для поиска событий;
+     * @param rangeEnd верхняя граница временного интервала для поиска событий;
+     * @param onlyAvailable только доступные события;
+     * @return предикат с заданными параметрами.
+     */
     private BooleanExpression getPredicate(String text,
                                            List<Long> categories,
                                            Boolean paid,

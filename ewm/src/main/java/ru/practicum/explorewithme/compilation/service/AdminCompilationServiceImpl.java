@@ -15,6 +15,10 @@ import ru.practicum.explorewithme.exception.EntityNotFoundException;
 
 import java.util.List;
 
+/**
+ * Класс описывающий логику работы с административной частью сервиса подборки событий.
+ * @see ru.practicum.explorewithme.compilation.service.AdminCompilationService
+ */
 @Service
 @AllArgsConstructor
 public class AdminCompilationServiceImpl implements AdminCompilationService {
@@ -73,12 +77,23 @@ public class AdminCompilationServiceImpl implements AdminCompilationService {
         compilationRepository.save(foundedCompilation);
     }
 
+    /**
+     * Метод поиска подборки событий в репозитории по числовому идентификатору.
+     * @param compId числовой идентификатор подборки событий.
+     * @return объект подборки событий.
+     */
     private Compilation findCompilation(long compId) {
         return compilationRepository.findById(compId)
                 .orElseThrow(() -> new EntityNotFoundException("Подборка не найдена",
                         String.format("Подборка с ID %d не найдена", compId)));
     }
 
+    /**
+     * Метод поиска события в подборки событий по числовому идентификатору.
+     * @param eventId числовой идентификатор события;
+     * @param foundedCompilation подборка событий, в которой необходимо найти событие.
+     * @return объект класса события.
+     */
     private Event findEventInCompilation(long eventId, Compilation foundedCompilation) {
         return foundedCompilation.getEvents().stream()
                 .filter(e -> e.getId() == eventId)

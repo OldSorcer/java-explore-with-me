@@ -8,6 +8,9 @@ import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Класс DTO предназначенный для работы с телом запроса на создание новой категории.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

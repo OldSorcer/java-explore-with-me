@@ -9,6 +9,10 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+/**
+ * Класс DTO содержищий информацию об обращении к конкретному эндпоинту.
+ * <br> Свойства: <b>id</b>, <b>app</b>, <b>uri</b>, <b>ip</b>, <b>timestamp</b>.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

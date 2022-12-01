@@ -13,6 +13,10 @@ import ru.practicum.explorewithme.exception.EntityNotFoundException;
 
 import java.util.List;
 
+/**
+ * Класс описывающий логику работы сервиса подборки событий.
+ * @see ru.practicum.explorewithme.compilation.service.PublicCompilationService
+ */
 @Service
 @AllArgsConstructor
 public class PublicCompilationServiceImpl implements PublicCompilationService {
