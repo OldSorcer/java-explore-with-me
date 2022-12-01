@@ -61,8 +61,8 @@ public class Event {
     @ManyToOne
     @JoinColumn(name = "initiator_id", nullable = false)
     private User initiator;
-    private int lat;
-    private int lon;
+    private double lat;
+    private double lon;
     @Column(nullable = false)
     private boolean paid;
     @Column(name = "participant_limit")
