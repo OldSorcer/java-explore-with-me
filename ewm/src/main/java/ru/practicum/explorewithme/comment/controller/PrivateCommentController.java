@@ -1,6 +1,7 @@
 package ru.practicum.explorewithme.comment.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/users/{userId}/comments")
 @AllArgsConstructor
+@Slf4j
 public class PrivateCommentController {
     private final PrivateCommentService commentService;
 
@@ -29,6 +31,9 @@ public class PrivateCommentController {
     public CommentDto create(@RequestBody @Valid CommentTextDto commentTextDto,
                              @PathVariable @Min(1) long userId,
                              @PathVariable @Min(1) long eventId) {
+        log.info("[ewm-service] Получен POST запрос к эндпоинту /users/{}/comments/{}\n" +
+                        "Тело запроса: {}",
+                userId, eventId, commentTextDto);
         return commentService.create(commentTextDto, eventId, userId);
     }
 
@@ -36,12 +41,17 @@ public class PrivateCommentController {
     public CommentDto update(@RequestBody @Valid CommentTextDto commentTextDto,
                              @PathVariable @Min(1) long userId,
                              @PathVariable @Min(1) long commentId) {
+        log.info("[ewm-service] Получен PATCH запрос к эндпоинту /users/{}/comments{}\n" +
+                        "Тело запроса: {}",
+                userId, commentId, commentTextDto);
         return commentService.update(commentTextDto, commentId, userId);
     }
 
     @DeleteMapping("/{commentId}")
     public void delete(@PathVariable @Min(1) long userId,
                        @PathVariable @Min(1) long commentId) {
+        log.info("[ewm-service] Получен DELETE запрос к эндпоинту /users/{}/comments{}",
+                userId, commentId);
         commentService.delete(userId, commentId);
     }
 
@@ -50,6 +60,8 @@ public class PrivateCommentController {
                                            @RequestParam(defaultValue = "0") int from,
                                            @RequestParam(defaultValue = "10") int size,
                                            @RequestParam(defaultValue = "NEW")CommentSort sort) {
+        log.info("[ewm-service] Получен GET запрос к эндроинту /users/{}/comments?from={}&size={}&sort={}",
+                userId, from, size, sort);
         return commentService.getAllByUserId(userId, from, size, sort);
     }
 }
