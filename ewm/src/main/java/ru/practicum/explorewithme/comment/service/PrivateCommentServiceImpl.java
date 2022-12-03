@@ -54,7 +54,7 @@ public class PrivateCommentServiceImpl implements PrivateCommentService {
     @Override
     public void delete(long userId, long commentId) {
         Comment foundedComment = commentRepository.getReferenceById(commentId);
-        if(foundedComment.getUser().getId() != userId) {
+        if (foundedComment.getUser().getId() != userId) {
             throw new ForbiddenOperationException("Запрещенная операция",
                     "Невозможно удалить комментарий созданный другим пользователем");
         }

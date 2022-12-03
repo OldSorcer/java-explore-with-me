@@ -23,7 +23,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +34,7 @@ import java.util.List;
  * <br> Свойству <b>category</b> соответствует объект класса {@link ru.practicum.explorewithme.category.model.Category};
  * <br> Свойству <b>initiator</b> - объект класса {@link ru.practicum.explorewithme.user.model.User};
  * <br> Свойству <b>state</b> - перечисление {@link ru.practicum.explorewithme.event.model.EventState}
+ *
  * @see ru.practicum.explorewithme.user.model.User
  * @see ru.practicum.explorewithme.category.model.Category
  * @see ru.practicum.explorewithme.event.model.EventState

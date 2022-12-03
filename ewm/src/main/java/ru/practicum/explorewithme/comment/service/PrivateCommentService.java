@@ -8,7 +8,10 @@ import java.util.List;
 
 public interface PrivateCommentService {
     CommentDto create(CommentTextDto commentDto, long eventId, long userId);
+
     CommentDto update(CommentTextDto commentDto, long commentId, long userId);
+
     void delete(long userId, long commentId);
+
     List<CommentDto> getAllByUserId(long userId, int from, int size, CommentSort sort);
 }

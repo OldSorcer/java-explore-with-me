@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class PublicCommentServiceImpl implements PublicCommentService{
+public class PublicCommentServiceImpl implements PublicCommentService {
     private final CommentRepository commentRepository;
 
 
