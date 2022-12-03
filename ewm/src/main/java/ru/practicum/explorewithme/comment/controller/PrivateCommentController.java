@@ -59,7 +59,7 @@ public class PrivateCommentController {
     public List<CommentDto> getAllByUserId(@PathVariable @Min(1) long userId,
                                            @RequestParam(defaultValue = "0") int from,
                                            @RequestParam(defaultValue = "10") int size,
-                                           @RequestParam(defaultValue = "NEW")CommentSort sort) {
+                                           @RequestParam(defaultValue = "NEW") CommentSort sort) {
         log.info("[ewm-service] Получен GET запрос к эндроинту /users/{}/comments?from={}&size={}&sort={}",
                 userId, from, size, sort);
         return commentService.getAllByUserId(userId, from, size, sort);

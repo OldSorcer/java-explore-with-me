@@ -1,7 +1,6 @@
 package ru.practicum.explorewithme.comment.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -53,17 +52,12 @@ public class PrivateCommentServiceImpl implements PrivateCommentService {
 
     @Override
     public void delete(long userId, long commentId) {
-        Comment foundedComment = commentRepository.getReferenceById(commentId);
+        Comment foundedComment = findCommentById(commentId);
         if (foundedComment.getUser().getId() != userId) {
             throw new ForbiddenOperationException("Запрещенная операция",
                     "Невозможно удалить комментарий созданный другим пользователем");
         }
-        try {
-            commentRepository.deleteById(commentId);
-        } catch (EmptyResultDataAccessException exc) {
-            throw new EntityNotFoundException("Комментарий не найден",
-                    String.format("Комментарий с ID %d не найден", commentId));
-        }
+        commentRepository.deleteById(commentId);
     }
 
     @Override
