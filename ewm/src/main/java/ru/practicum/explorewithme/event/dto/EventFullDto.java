@@ -7,10 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.practicum.explorewithme.category.dto.CategoryDto;
+import ru.practicum.explorewithme.comment.model.Comment;
 import ru.practicum.explorewithme.event.model.EventState;
 import ru.practicum.explorewithme.user.dto.UserShortDto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Класс DTO для передачи полной информации о событии между клиентом и основным сервисом приложения.
@@ -40,4 +42,5 @@ public class EventFullDto {
     private EventState state;
     private String title;
     private long views;
+    private List<Comment> comments;
 }

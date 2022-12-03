@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import ru.practicum.explorewithme.category.model.Category;
+import ru.practicum.explorewithme.comment.model.Comment;
 import ru.practicum.explorewithme.user.model.User;
 
 import javax.persistence.Column;
@@ -17,9 +18,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Класс события обладающий свойствами:
@@ -76,4 +81,11 @@ public class Event {
     @Column(nullable = false)
     private String title;
     private long views;
+    @OneToMany
+    @JoinTable(
+            name = "comments",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "comment_id")
+    )
+    private List<Comment> comments;
 }
