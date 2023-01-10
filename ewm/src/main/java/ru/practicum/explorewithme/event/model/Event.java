@@ -9,7 +9,6 @@ import lombok.ToString;
 import ru.practicum.explorewithme.category.model.Category;
 import ru.practicum.explorewithme.comment.model.Comment;
 import ru.practicum.explorewithme.user.model.User;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -46,7 +45,6 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-@ToString
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
