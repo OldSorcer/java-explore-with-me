@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.practicum.explorewithme.exception.ConflictException;
 import ru.practicum.explorewithme.exception.EntityNotFoundException;
+import ru.practicum.explorewithme.exception.ForbiddenOperationException;
 
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
@@ -59,8 +60,19 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ApiError handleForbiddenOperationError(ForbiddenOperationException exc) {
+        return ApiError.builder()
+                .message(exc.getMessage())
+                .reason(exc.getReason())
+                .status(HttpStatus.FORBIDDEN)
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiError handleUnsupportedError(Exception exc) {
+    public ApiError handleUnsupportedError(RuntimeException exc) {
         return ApiError.builder()
                 .message("Server error")
                 .reason(exc.getMessage())

@@ -72,6 +72,7 @@ public final class EventDtoMapper {
                 .confirmedRequests(event.getConfirmedRequests())
                 .views(event.getViews())
                 .location(new LocationDto(event.getLat(), event.getLon()))
+                .comments(event.getComments())
                 .build();
     }
 
